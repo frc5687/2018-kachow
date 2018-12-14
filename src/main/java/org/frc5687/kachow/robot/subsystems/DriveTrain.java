@@ -74,7 +74,9 @@ public class DriveTrain extends Subsystem  implements PIDSource {
     public void setPower(double leftSpeed, double rightSpeed, boolean override) {
         try {
             _leftFront.set(leftSpeed);
+            _leftRear.set(leftSpeed);
             _rightFront.set(rightSpeed);
+            _rightRear.set(rightSpeed);
         } catch (Exception e) {
             DriverStation.reportError("DriveTrain.setPower exception: " + e.toString(), false);
         }
