@@ -59,21 +59,21 @@ public class Robot extends TimedRobot {
         _oi.initializeButtons(_instance);
         _autoChooser = new AutoChooser();
 
-        try {
-            _camera0 = CameraServer.getInstance().startAutomaticCapture(0);
-            _camera0.setResolution(320, 240);
-            _camera0.setFPS(10);
-        } catch (Exception e) {
-            DriverStation.reportError(e.getMessage(), true);
-        }
-
-        try {
-            _camera1 = CameraServer.getInstance().startAutomaticCapture(1);
-            _camera1.setResolution(320, 240);
-            _camera1.setFPS(30);
-        } catch (Exception e) {
-            DriverStation.reportError(e.getMessage(), true);
-        }
+//        try {
+//            _camera0 = CameraServer.getInstance().startAutomaticCapture(0);
+//            _camera0.setResolution(320, 240);
+//            _camera0.setFPS(10);
+//        } catch (Exception e) {
+//            DriverStation.reportError(e.getMessage(), true);
+//        }
+//
+//        try {
+//            _camera1 = CameraServer.getInstance().startAutomaticCapture(1);
+//            _camera1.setResolution(320, 240);
+//            _camera1.setFPS(30);
+//        } catch (Exception e) {
+//            DriverStation.reportError(e.getMessage(), true);
+//        }
 
     }
 
@@ -149,11 +149,11 @@ public class Robot extends TimedRobot {
     }
 
     public void updateDashboard() {
-        _pdp.updateDashboard();
-        _arm.updateDashboard();
-        _autoChooser.updateDashboard();
-        _drivetrain.updateDashboard();
-        _pincer.updateDashboard();
+//        _pdp.updateDashboard();
+//        _arm.updateDashboard();
+//        _autoChooser.updateDashboard();
+//        _drivetrain.updateDashboard();
+//        _pincer.updateDashboard();
     }
 
     public OI getOI() { return _oi; }

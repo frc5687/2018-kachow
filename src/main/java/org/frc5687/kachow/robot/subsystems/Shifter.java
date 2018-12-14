@@ -49,12 +49,12 @@ public class Shifter extends Subsystem {
     }
 
     public Gear getGear() {
-        DoubleSolenoid.Value current = shifterSolenoid.get();
-        if (current==Gear.HIGH.getSolenoidValue()) {
-            return Gear.HIGH;
-        } else if (current== Gear.LOW.getSolenoidValue()) {
-            return Gear.LOW;
-        }
+//        DoubleSolenoid.Value current = shifterSolenoid.get();
+//        if (current==Gear.HIGH.getSolenoidValue()) {
+//            return Gear.HIGH;
+//        } else if (current== Gear.LOW.getSolenoidValue()) {
+//            return Gear.LOW;
+//        }
         return Gear.UNKNOWN;
     }
 
@@ -71,7 +71,7 @@ public class Shifter extends Subsystem {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putString("shifter/Gear", getGear()==Gear.HIGH ? "High" : (getGear() == Gear.LOW ? "Low" : "Unknown"));
+        // SmartDashboard.putString("shifter/Gear", getGear()==Gear.HIGH ? "High" : (getGear() == Gear.LOW ? "Low" : "Unknown"));
     }
 
     public enum Gear {

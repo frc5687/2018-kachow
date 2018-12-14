@@ -13,10 +13,14 @@ public class RobotMap {
     }
 
     public static class PWM {
-        public static final int ARM_VICTORSP = 0;
+        public static final int ARM_VICTORSP = 4;
         public static final int RED_STRIP = 10;
         public static final int GREEN_STRIP = 11;
         public static final int BLUE_STRIP = 13;
+        public static final int LEFT_FRONT_VICTOR = 3;
+        public static final int LEFT_REAR_VICTOR = 0;
+        public static final int RIGHT_FRONT_VICTOR = 2;
+        public static final int RIGHT_REAR_VICTOR = 1;
     }
 
     public static class PCM {
