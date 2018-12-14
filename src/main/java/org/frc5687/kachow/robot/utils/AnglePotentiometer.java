@@ -37,7 +37,7 @@ public class AnglePotentiometer implements PIDSource {
         _scale = (_maxAngle - _minAngle) / (topValue - _bottomValue);
         _topValue = topValue;
     }
-    public void restBottom () {
+    public void restBottem () {
         double bottomValue = getRaw();
         _scale = (_maxAngle - _minAngle) / (_topValue - bottomValue);
         _bottomValue = bottomValue;

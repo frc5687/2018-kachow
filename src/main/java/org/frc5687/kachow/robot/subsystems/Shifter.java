@@ -1,8 +1,12 @@
 package org.frc5687.kachow.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.frc5687.kachow.robot.Constants;
 import org.frc5687.kachow.robot.Robot;
 import org.frc5687.kachow.robot.RobotMap;
@@ -13,6 +17,7 @@ public class Shifter extends Subsystem {
     private DoubleSolenoid shifterSolenoid;
     private Compressor compressor;
     private long waitPeriodEndTime = 0;
+    private boolean autShiftEnabled = false;
 
     public Shifter(Robot robot) {
         _robot = robot;
@@ -26,20 +31,49 @@ public class Shifter extends Subsystem {
     public void shift(Gear gear, boolean auto) {
         shifterSolenoid.set(gear.getSolenoidValue());
         waitPeriodEndTime = System.currentTimeMillis() + (auto ? Constants.Shifter.AUTO_WAIT_PERIOD : Constants.Shifter.MANUAL_WAIT_PERIOD);
-
+        if (gear==Gear.HIGH) {
+            if (!DriverStation.getInstance().isAutonomous()) {
+                _robot.getOI().rumbleRight();
+            }
+        }
+        if (gear==Gear.LOW) {
+            if (!DriverStation.getInstance().isAutonomous()) {
+                _robot.getOI().rumbleLeft();
+            }
+        }
+        _robot.getLEDStrip().setGear(gear);
     }
 
-    public boolean waitPeriodElapsed() { return System.currentTimeMillis() > waitPeriodEndTime;}
+    public boolean waitPeriodElapsed() {
+        return System.currentTimeMillis() > waitPeriodEndTime;
+    }
 
     public Gear getGear() {
         DoubleSolenoid.Value current = shifterSolenoid.get();
         if (current==Gear.HIGH.getSolenoidValue()) {
             return Gear.HIGH;
-        } else if (current == Gear.LOW.getSolenoidValue()) {
+        } else if (current== Gear.LOW.getSolenoidValue()) {
             return Gear.LOW;
         }
         return Gear.UNKNOWN;
     }
+
+    public boolean isCompressorAtPressure() {
+        return compressor.getPressureSwitchValue();
+    }
+
+    public boolean isCommpressorEnabled() {
+        return compressor.enabled();
+    }
+
+    public double getCompressorCurrent() {
+        return compressor.getCompressorCurrent();
+    }
+
+    public void updateDashboard() {
+        SmartDashboard.putString("shifter/Gear", getGear()==Gear.HIGH ? "High" : (getGear() == Gear.LOW ? "Low" : "Unknown"));
+    }
+
     public enum Gear {
         UNKNOWN(DoubleSolenoid.Value.kOff),
         HIGH(DoubleSolenoid.Value.kReverse),
@@ -57,5 +91,12 @@ public class Shifter extends Subsystem {
 
     }
 
+    public boolean isAutShiftEnabled() {
+        return autShiftEnabled;
+    }
+
+    public void setAutShiftEnabled(boolean enabled) {
+        autShiftEnabled = enabled;
+    }
 
 }

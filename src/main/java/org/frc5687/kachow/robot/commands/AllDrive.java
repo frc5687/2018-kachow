@@ -5,23 +5,29 @@ import org.frc5687.kachow.robot.OI;
 import org.frc5687.kachow.robot.subsystems.DriveTrain;
 
 /**
- * Created by Ben Bernard on 10/23/2018.
+ * Created by Ben Bernard on 6/4/2018.
  */
-public class TeleDrive extends Command {
+public class AllDrive extends Command {
 
     private OI _oi;
     private DriveTrain _driveTrain;
 
-    public TeleDrive(OI oi,  DriveTrain driveTrain) {
-        _oi = oi;
+    public AllDrive(DriveTrain driveTrain, OI oi) {
         _driveTrain = driveTrain;
-        requires(driveTrain);
+        _oi = oi;
+        requires(_driveTrain);
+    }
+
+
+ @Override
+    protected boolean isFinished() {
+        return false;
     }
 
     @Override
     protected void execute() {
         DriveTrain.DriveMode driveMode = _driveTrain.getDriveMode();
-        switch (_driveTrain.getDriveMode()) {
+        switch (driveMode) {
             case ARCADE:
                 // Get the base speed from the throttle
                 double speed = _oi.getDriveSpeed(driveMode);
@@ -29,22 +35,26 @@ public class TeleDrive extends Command {
                 // Get the rotation from the tiller
                 double rotation = _oi.getDriveRotation(driveMode);
 
-                // Call the drivetrain
                 _driveTrain.arcadeDrive(speed, rotation);
+                break;
+            case CHEESY_ARCADE:
+                // Get the base speed from the throttle
+                // Get the base speed from the throttle
+                double stickSpeed = _oi.getDriveSpeed(driveMode);
+
+                // Get the rotation from the tiller
+                double wheelRotation = _oi.getDriveRotation(driveMode);
+
+                _driveTrain.cheesyDrive(stickSpeed, wheelRotation);
+
                 break;
 
             case TANK:
                 double leftSpeed = _oi.getLeftSpeed();
                 double rightSpeed = _oi.getRightSpeed();
 
-                _driveTrain.tankDrive(leftSpeed, rightSpeed);
+                _driveTrain.tankDrive(leftSpeed, rightSpeed, false);
                 break;
         }
-
-    }
-
-    @Override
-    protected boolean isFinished() {
-        return false;
     }
 }
