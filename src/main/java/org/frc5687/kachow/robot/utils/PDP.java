@@ -23,10 +23,12 @@ public class PDP extends PowerDistributionPanel {
     }
 
     public double getCurrent(int channel, boolean overrideCache) {
-        if (overrideCache) {
+/*        if (overrideCache) {
             return super.getCurrent(channel);
         }
         return cache[channel];
+        */
+        return 0;
     }
 
     public void updateDashboard() {
@@ -47,7 +49,7 @@ public class PDP extends PowerDistributionPanel {
         SmartDashboard.putNumber("PDP/Current/14", getCurrent(14));
         SmartDashboard.putNumber("PDP/Current/15", getCurrent(15));
     }
-    
+
     public boolean excessiveCurrent(int channel, double threshold) {
         double current = getCurrent(channel);
         if (current >= threshold) {
